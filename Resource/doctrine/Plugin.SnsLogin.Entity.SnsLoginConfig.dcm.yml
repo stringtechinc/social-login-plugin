@@ -1,0 +1,22 @@
+Plugin\SnsLogin\Entity\SnsLoginConfig:
+    type: entity
+    table: plg_sns_login_config
+    repositoryClass: Plugin\SnsLogin\Repository\SnsLoginConfigRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            column: sns_login_id
+    fields:
+        name:
+            type: text
+            nullable: false
+        public_key:
+            type: text
+            nullable: false
+        secret_key:
+            type: text
+            nullable: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,23 @@
+Plugin\SnsLogin\Entity\SnsLoginCustomer:
+    type: entity
+    table: plg_sns_login_customer
+    repositoryClass: Plugin\SnsLogin\Repository\SnsLoginCustomerRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        customer_id:
+            type: integer
+            nullable: false
+        union_id:
+            type: text
+            nullable: false
+        info:
+            type: text
+            nullable: false
+    lifecycleCallbacks: {  }

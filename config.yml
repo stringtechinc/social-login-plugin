@@ -1,0 +1,8 @@
+name: sns-login-plugin
+code: SnsLogin
+version: 1.0.0
+service:
+    - SnsLoginServiceProvider
+orm.path:
+    - /Resource/doctrine
+event: SnsLoginEvent
