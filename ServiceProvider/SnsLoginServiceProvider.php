@@ -28,7 +28,7 @@ class SnsLoginServiceProvider implements ServiceProviderInterface
         $app->match('/'.$app['config']['admin_route'].'/plugin/SnsLogin/config', 'Plugin\SnsLogin\Controller\ConfigController::index')->bind('plugin_SnsLogin_config');
 
         // front
-        $app->match('/wechat', 'Plugin\SnsLogin\Controller\SnsLoginController::wechat')->bind('wechat');
+        $app->match('/mypage/login/wechat', 'Plugin\SnsLogin\Controller\SnsLoginController::wechat')->bind('wechat');
         $app->match('/mypage/login', 'Plugin\SnsLogin\Controller\SnsLoginController::login')->bind('mypage_login');
 
         // Form

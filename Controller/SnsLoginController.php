@@ -75,21 +75,25 @@ class SnsLoginController
      */
     public function wechat(Application $app, Request $request)
     {
+
         if ($app->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $app->redirect($app->url('mypage'));
         }
-
-        $Code = $request->query->get('code');
-        if (!$Code) {
+        $code = $request->query->get('code');
+        if (!$code) {
+            log_info('sns login qr connect error');
             return $app->redirect($app->url('mypage_login'));
         }
         $Config = $app['eccube.plugin.repository.sns_login_config']->find(1);
         if (!$Config) {
+            log_info('sns login config error');
             return $app->redirect($app->url('mypage_login'));
         }
 
-        $User = $app['eccube.plugin.service.sns_login_wechat']->oauth2($Code, $Config);
+        $User = $app['eccube.plugin.service.sns_login_wechat']->oauth2($code, $Config);
+        log_info(json_encode($User));
         if (empty($User)) {
+            log_info('sns login user info error');
             return $app->redirect($app->url('mypage_login'));
         }
         
@@ -98,6 +102,7 @@ class SnsLoginController
             $SnsLoginCustomer->setInfo(json_encode($User));
             $app['orm.em']->persist($SnsLoginCustomer);
             $app['orm.em']->flush();
+            $Customer = $app['eccube.repository.customer']->find($SnsLoginCustomer->getCustomerId());
         } else {
             $CustomerStatus = $app['eccube.repository.customer_status']->find(CustomerStatus::ACTIVE);
             $Customer = $app['eccube.repository.customer']->newCustomer();
@@ -125,10 +130,11 @@ class SnsLoginController
                 ->setCustomerId($Customer->getId());
             $app['orm.em']->persist($SnsLoginCustomer);
             $app['orm.em']->flush();
-
-            $token = new UsernamePasswordToken($Customer, null, 'customer', array('ROLE_USER'));
-            $app['security.token_storage']->setToken($token);
         }
+        $token = new UsernamePasswordToken($Customer, null, 'customer', array('ROLE_USER'));
+
+        log_info('sns login user success');
+        $app['security.token_storage']->setToken($token);
         return $app->redirect($app->url('top'));
     }
 }

@@ -39,7 +39,9 @@ class WechatService
      */
     public function qrconnect(SnsLoginConfig $Config)
     {
-        $redirectUrl = 'https%3A%2F%2Fdev.haoweidao.jp%2Flogin%2Fwechat';
+        $redirectUrl = urlencode('https://dev.haoweidao.jp/mypage/login/wechat');
+//        $redirectUrl = 'https%3A%2F%2Fdev.haoweidao.jp%2Flogin%2Fwechat';
+
         $state = $this->makeRandStr(49);
         $qrconnectUrl = self::QR_URI
             . 'appid=' . $Config->getPublicKey()

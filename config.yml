@@ -1,8 +1,7 @@
-name: sns-login-plugin
+name: Social Login
 code: SnsLogin
 version: 1.0.0
 service:
     - SnsLoginServiceProvider
 orm.path:
     - /Resource/doctrine
-event: SnsLoginEvent
